@@ -1,7 +1,7 @@
-import styles from './index.less';
-import { useState, useEffect } from 'react';
-import { Button, Checkbox, Collapse, Toast, Modal } from 'antd-mobile';
-import { fetchCityData } from '@/services/city-data';
+import styles from "./index.less";
+import { useState, useEffect } from "react";
+import { Button, Checkbox, Collapse, Toast, Modal } from "antd-mobile";
+import { fetchCityData } from "@/services/city-data";
 
 export default function IndexPage() {
   const [cityList, setCityList] = useState<any>([]);
@@ -16,8 +16,8 @@ export default function IndexPage() {
     let cityData = await fetchCityData();
     setCityList(cityData);
     // 初始化已勾选数据
-    let selectData = localStorage.getItem('select_city');
-    if (selectData != null && selectData != '') {
+    let selectData = localStorage.getItem("select_city");
+    if (selectData != null && selectData != "") {
       let selectArr = JSON.parse(selectData);
       setSelectCity(selectArr as string[]);
     }
@@ -25,7 +25,7 @@ export default function IndexPage() {
 
   const handleAboutOnClick = () => {
     Modal.alert({
-      title: '隐私保护指引',
+      title: "隐私保护指引",
       content: (
         <div>
           <br />
@@ -35,7 +35,7 @@ export default function IndexPage() {
           我们也<b>不会上传/分析</b>您的行程数据，请放心使用。
           <br />
           <br />
-          我们的灵感来源于{' '}
+          我们的灵感来源于{" "}
           <span
             className={styles.privacy}
             onClick={() => {
@@ -46,13 +46,12 @@ export default function IndexPage() {
           </span>
           <br />
           <br />
-          纪念版页面入口: xingchengka.com
           <br />
           <br />
         </div>
       ),
       onConfirm: () => {
-        console.log('Confirmed');
+        console.log("Confirmed");
       },
     });
   };
@@ -60,13 +59,13 @@ export default function IndexPage() {
   const handleSaveOnClick = () => {
     if (selectCity.length == 0) {
       Toast.show({
-        content: '请先选择行程信息',
+        content: "请先选择行程信息",
         maskClickable: true,
       });
       return;
     }
-    let cityText = selectCity.join(', ');
-    localStorage.setItem('city_text', cityText);
+    let cityText = selectCity.join(", ");
+    localStorage.setItem("city_text", cityText);
     location.href = `#/result`;
   };
 
@@ -80,7 +79,7 @@ export default function IndexPage() {
         <div className={styles.titleBox}>
           <div className={styles.title}>最近三年到达或旅经：</div>
           <div className={styles.desc}>
-            已选择 {selectCity.length} 个{' '}
+            已选择 {selectCity.length} 个{" "}
             {selectCity.length > 0 && (
               <span className={styles.reset} onClick={handleResetOnClick}>
                 清除
@@ -96,11 +95,10 @@ export default function IndexPage() {
       </div>
 
       <div className={styles.tip}>
-        * 行程信息只会在本地处理{' '}
+        * 行程信息只会在本地处理{" "}
         <span className={styles.privacy} onClick={handleAboutOnClick}>
           隐私指引
-        </span>{' '}
-        - xingchengka.com
+        </span>{" "}
       </div>
 
       <Checkbox.Group
@@ -110,7 +108,7 @@ export default function IndexPage() {
           setSelectCity(val as string[]);
           let selectData = JSON.stringify(val as string[]);
           //console.log(selectData);
-          localStorage.setItem('select_city', selectData);
+          localStorage.setItem("select_city", selectData);
         }}
       >
         <Collapse>
@@ -124,9 +122,9 @@ export default function IndexPage() {
                         <div key={`city_${j}`} className={styles.cityItem}>
                           <Checkbox
                             style={{
-                              '--icon-size': '18px',
-                              '--font-size': '14px',
-                              '--gap': '6px',
+                              "--icon-size": "18px",
+                              "--font-size": "14px",
+                              "--gap": "6px",
                             }}
                             value={`${item.provinceName}${item_j.cityName}`}
                           >
@@ -142,10 +140,7 @@ export default function IndexPage() {
         </Collapse>
       </Checkbox.Group>
 
-      <div className={styles.footer_tip}>
-        「行程卡纪念版」 - xingchengka.com
-      </div>
-
+      <div className={styles.footer_tip}>「行程卡纪念版」</div>
     </div>
   );
 }
